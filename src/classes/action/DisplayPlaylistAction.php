@@ -21,7 +21,7 @@ class DisplayPlaylistAction extends Action{
 
         $playlists = $repo->findAllPlaylists();
         if (empty($playlists)) {
-            return '<p>Aucune playlist. <a href="?action=add-playlist">Créer une playlist</a></p>';
+            return '<div class="hero"><h1>Aucune playlist</h1><p>Créez votre première playlist pour commencer.</p><div class="actions"><a class="btn" href="?action=add-playlist">Créer une playlist</a></div></div>';
         }
 
         $courante = $_SESSION['courante'] ?? null;
@@ -32,11 +32,10 @@ class DisplayPlaylistAction extends Action{
             $renderer = new AudioListRenderer($playlist);
             $html .= $renderer->render(Renderer::compact);
             if ($playlist->id === $courante) {
-                $html .= '<p><b>Playlist courante</b> : <a href="?action=add-track">Ajouter une piste</a></p>';
+                $html .= '<div class="pl-tools"><span>Playlist courante</span><a class="btn ghost" href="?action=add-track">Ajouter une piste</a></div>';
             } else {
-                $html .= '<p><a href="?action=playlist&select=' . $playlist->id . '">Choisir cette playlist</a></p>';
+                $html .= '<div class="pl-tools"><a class="btn ghost" href="?action=playlist&select=' . $playlist->id . '">Choisir cette playlist</a></div>';
             }
-            $html .= '<hr>';
         }
         return $html;
     }

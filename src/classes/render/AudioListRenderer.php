@@ -18,14 +18,36 @@ class AudioListRenderer implements Renderer
         $tracksHtml = '';
         foreach ($this->audioList->pistes as $track) {
             $renderer = RendererFactory::getRenderer($track);
-            $tracksHtml = $tracksHtml . '<li>' . $renderer->render(Renderer::compact) . '</li>';
+            $tracksHtml .= '<li>' . $renderer->render(Renderer::compact) . '</li>';
+        }
+        if ($tracksHtml === '') {
+            $tracksHtml = '<li class="empty">Cette playlist est vide. Ajoutez une première piste.</li>';
         }
 
-        return "<h1>{$this->audioList->nom}</h1>"
-            . "<ul>{$tracksHtml}</ul>"
-            . "<div>"
-            . "<p>Nombre de pistes : {$this->audioList->nombre2pistes}</p>"
-            . "<p>Durée totale : {$this->audioList->dureeTotale} secondes</p>"
-            . "</div>";
+        $nom = AudioTrackRenderer::esc($this->audioList->nom);
+        $nb = (int)$this->audioList->nombre2pistes;
+        $duree = AudioTrackRenderer::formatDuree((int)$this->audioList->dureeTotale);
+        $pluriel = $nb > 1 ? 'pistes' : 'piste';
+
+        // couleur de la pochette dérivée du nom de la playlist
+        $h = crc32((string)$this->audioList->nom) % 360;
+        $h2 = ($h + 50) % 360;
+        $cover = "background:linear-gradient(135deg,hsl($h,65%,55%),hsl($h2,65%,32%))";
+
+        return <<<HTML
+<section class="playlist">
+    <div class="pl-head">
+        <div class="cover" style="{$cover}">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z"/></svg>
+        </div>
+        <div class="meta">
+            <div class="kind">Playlist</div>
+            <h1>{$nom}</h1>
+            <div class="stats">{$nb} {$pluriel}, {$duree}</div>
+        </div>
+    </div>
+    <ul class="tracks">{$tracksHtml}</ul>
+</section>
+HTML;
     }
 }

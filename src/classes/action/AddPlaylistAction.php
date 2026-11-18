@@ -41,6 +41,6 @@ class AddPlaylistAction extends Action{
         $_SESSION['courante'] = $playlist->id;
 
         $renderer = new AudioListRenderer($playlist);
-        return $renderer->render(Renderer::compact) . '<a href="?action=add-track">Ajouter une piste</a>';
+        return $renderer->render(Renderer::compact) . '<div class="pl-tools"><a class="btn" href="?action=add-track">Ajouter une piste</a></div>';
     }
 }

@@ -14,10 +14,8 @@ class PodcastTrackRenderer extends AudioTrackRenderer
         $this->podcastTrack = $podcastTrack;
     }
 
-    public function render(int $selector): string
+    protected function subtitle(): string
     {
-        $html = parent::render($selector);
-        $html = $html . "<h2>auteur {$this->podcastTrack->auteur}, sorti le {$this->podcastTrack->date}</h2>";
-        return $html;
+        return $this->podcastTrack->auteur . ' - ' . $this->podcastTrack->date;
     }
 }

@@ -14,11 +14,8 @@ class AlbumTrackRenderer extends AudioTrackRenderer
         $this->albumTrack = $albumTrack;
     }
 
-    public function render(int $selector): string
+    protected function subtitle(): string
     {
-        $html = parent::render($selector);
-        $html .= "<h2>artiste {$this->albumTrack->artiste}, de l'album {$this->albumTrack->album}
-            sorti en {$this->albumTrack->annee}, piste n°{$this->albumTrack->numero}</h2>";
-        return $html;
+        return $this->albumTrack->artiste . ' - ' . $this->albumTrack->album . ' (' . $this->albumTrack->annee . ')';
     }
 }
