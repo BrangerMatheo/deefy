@@ -1,0 +1,34 @@
+# ============================================================
+#  Deefy - .htaccess (Apache / webetu)
+# ============================================================
+
+DirectoryIndex index.php
+Options -Indexes
+
+# Empêche l'accès direct aux fichiers sensibles (config, sql, composer, sources)
+<FilesMatch "(^\.ht|\.ini$|\.sql$|composer\.(json|lock)$|\.md$)">
+    Require all denied
+</FilesMatch>
+
+# Bloque l'accès web aux dossiers internes
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(src|vendor|sql)(/|$) - [F,L]
+</IfModule>
+
+# Encodage par défaut
+AddDefaultCharset UTF-8
+
+# Autorise les fichiers audio plus gros (ignoré sans erreur si php_value indisponible)
+<IfModule mod_php.c>
+    php_value upload_max_filesize 20M
+    php_value post_max_size 25M
+    php_flag display_errors Off
+</IfModule>
+
+# Types MIME audio
+<IfModule mod_mime.c>
+    AddType audio/mpeg .mp3
+    AddType audio/ogg  .ogg
+    AddType audio/wav  .wav
+</IfModule>

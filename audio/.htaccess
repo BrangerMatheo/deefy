@@ -1,0 +1,8 @@
+# Dossier des fichiers audio uploadés : jamais d'exécution de code, pas de listing
+Options -Indexes -ExecCGI
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<FilesMatch "\.(php[0-9]?|phtml|phar)$">
+    Require all denied
+</FilesMatch>

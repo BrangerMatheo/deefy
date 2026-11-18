@@ -1,0 +1,8 @@
+vendor/
+db.config.ini
+audio/*.mp3
+audio/*.ogg
+audio/*.wav
+.idea/
+.vscode/
+*.log

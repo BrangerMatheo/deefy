@@ -1,0 +1,15 @@
+{
+    "name": "iutnc/deefy",
+    "autoload": {
+        "psr-4": {
+            "iutnc\\deefy\\": "src/classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Branger Matheo",
+            "email": "matheo.branger8@etu.univ-lorraine.fr"
+        }
+    ],
+    "require": {}
+}
